@@ -1,0 +1,81 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+
+plugins {
+    id 'org.jetbrains.kotlin.multiplatform' version '1.3.60'
+}
+repositories {
+    jcenter()
+    maven { url "https://dl.bintray.com/kotlin/ktor" }
+    mavenCentral()
+    mavenLocal()
+}
+def ktor_version = '1.2.5'
+def logback_version = '1.2.3'
+def kotlintools_version = '0.0.6'
+
+kotlin {
+    jvm()
+    js {
+        browser {
+        }
+    }
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation("io.ktor:ktor-client-core:$ktor_version")
+                implementation kotlin('stdlib-common')
+                implementation "com.github.hovi:kotlintools:$kotlintools_version"
+            }
+        }
+        commonTest {
+            dependencies {
+                implementation kotlin('test-common')
+                implementation kotlin('test-annotations-common')
+            }
+        }
+        jvmMain {
+            dependencies {
+                implementation kotlin('stdlib-jdk8')
+                implementation "io.ktor:ktor-client-apache:$ktor_version"
+                implementation "io.ktor:ktor-server-netty:$ktor_version"
+                implementation "io.ktor:ktor-html-builder:$ktor_version"
+                implementation "ch.qos.logback:logback-classic:$logback_version"
+                implementation "com.github.hovi:kotlintools-jvm:$kotlintools_version"
+            }
+        }
+        jvmTest {
+            dependencies {
+                implementation kotlin('test')
+                implementation kotlin('test-junit')
+            }
+        }
+        jsMain {
+            dependencies {
+                implementation("io.ktor:ktor-client-js:$ktor_version")
+                implementation kotlin('stdlib-js')
+                implementation "com.github.hovi:kotlintools-js:$kotlintools_version"
+            }
+        }
+        jsTest {
+            dependencies {
+                implementation kotlin('test-js')
+            }
+        }
+    }
+}
+
+jvmJar {
+    dependsOn(jsBrowserWebpack)
+    from(new File(jsBrowserWebpack.entry.name, jsBrowserWebpack.outputPath))
+}
+
+task run(type: JavaExec, dependsOn: [jvmJar]) {
+    group = "application"
+    main = "sample.SampleJvmKt"
+    classpath(configurations.jvmRuntimeClasspath, jvmJar)
+    args = []
+}

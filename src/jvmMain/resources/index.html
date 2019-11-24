@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width"/>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo="/>
+    <title>rymy.cz</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+
+<nav class="navbar navbar-light bg-light">
+    <span class="navbar-brand mb-0 h1">rymy.cz</span>
+    <div class="form-inline">
+        <input class="form-control" type="search" placeholder="Hledat rýmy na slovo" required="required"
+               aria-label="Hledat rýmy na slovo" autofocus id='wdUp' name='wdUp'/>
+        <div class="btn-group" role="group">
+            <input class="btn btn-dark" id="search" name='btFindUp' type="button" value="Vyhledat"/>
+            <input class="btn btn-secondary" id="settings" type="button" value="Nastavení"/>
+        </div>
+    </div>
+</nav>
+
+
+<!--div class="input-group mb-3">
+    <input type="search" class="form-control" placeholder="Hledat rýmy na slovo" autofocus id='wdUp' name='wdUp' value=""/>
+    <div class="input-group-append">
+        <input class="btn btn-dark" id="search" name='btFindUp' type="button" value="Vyhledat">
+        <input class="btn btn-light" id="settings" type="button" value="Nastavení">
+    </div>
+</div-->
+
+
+<div class="table-responsive collapse" id="settings-wrap">
+    <table class="table table-sm">
+        <tr>
+            <th>Preference</th>
+            <td> potlač.</td>
+            <td>nepref.</td>
+            <td>norm.</td>
+            <td>pref.</td>
+        </tr>
+        <tr>
+            <td>Gramat.odlišnost</td>
+            <td><input type='radio' name='pfPG' value='0'/></td>
+            <td><input type='radio' name='pfPG' value='1'/></td>
+            <td><input type='radio' name='pfPG' value='2' checked/></td>
+            <td><input type='radio' name='pfPG' value='3'/></td>
+        </tr>
+        <tr>
+            <td>Předložkové vazby</td>
+            <td><input type='radio' name='pfPP' value='0'/></td>
+            <td><input type='radio' name='pfPP' value='1'/></td>
+            <td><input type='radio' name='pfPP' value='2' checked/></td>
+            <td><input type='radio' name='pfPP' value='3'/></td>
+        </tr>
+        <tr>
+            <td><dfn>Cimr</dfn>manovy rýmy</td>
+            <td><input type='radio' name='pfPC' value='0'/></td>
+            <td><input type='radio' name='pfPC' value='1'/></td>
+            <td><input type='radio' name='pfPC' value='2' checked/></td>
+            <td><input type='radio' name='pfPC' value='3'/></td>
+        </tr>
+        <tr>
+            <td><dfn>Vlast</dfn>ní jména</td>
+            <td><input type='radio' name='pfPV' value='0'/></td>
+            <td><input type='radio' name='pfPV' value='1'/></td>
+            <td><input type='radio' name='pfPV' value='2' checked/></td>
+            <td><input type='radio' name='pfPV' value='3'/></td>
+        </tr>
+        <tr>
+            <td><dfn>Kniž</dfn>ní a archaismy</td>
+            <td><input type='radio' name='pfPK' value='0'/></td>
+            <td><input type='radio' name='pfPK' value='1'/></td>
+            <td><input type='radio' name='pfPK' value='2' checked/></td>
+            <td><input type='radio' name='pfPK' value='3'/></td>
+        </tr>
+        <tr>
+            <td><dfn>nesp</dfn>isovná slova</td>
+            <td><input type='radio' name='pfPH' value='0'/></td>
+            <td><input type='radio' name='pfPH' value='1'/></td>
+            <td><input type='radio' name='pfPH' value='2' checked/></td>
+            <td><input type='radio' name='pfPH' value='3'/></td>
+        </tr>
+        <tr>
+            <td><dfn>vulg</dfn>arismy</td>
+            <td><input type='radio' name='pfPE' value='0'/></td>
+            <td><input type='radio' name='pfPE' value='1'/></td>
+            <td><input type='radio' name='pfPE' value='2' checked/></td>
+            <td><input type='radio' name='pfPE' value='3'/></td>
+        </tr>
+        <tr>
+            <td>Agregace</td>
+            <td><input type='radio' name='pfPA' value='0'/></td>
+            <td><input type='radio' name='pfPA' value='1'/></td>
+            <td><input type='radio' name='pfPA' value='2' checked/></td>
+            <td><input type='radio' name='pfPA' value='3'/></td>
+        </tr>
+        <tr>
+            <th>Zobrazování</th>
+            <td>žádné</td>
+            <td>lema</td>
+            <td>česky</td>
+            <td>latin.</td>
+        </tr>
+        <tr>
+            <td>Gramat.kategorie</td>
+            <td><input type='radio' name='pfPZ' value='0' disabled="disabled"/></td>
+            <td><input type='radio' name='pfPZ' value='1'/></td>
+            <td><input type='radio' name='pfPZ' value='2' checked/></td>
+            <td><input type='radio' name='pfPZ' value='3'/></td>
+        </tr>
+        <tr>
+            <td colspan='2'>stránkování ř./str.</td>
+            <td colspan='3'><select id="lnPS" name='lnPS' class="form-control">
+                <option value='16'>16-32</option>
+                <option value='32'>32-64</option>
+                <option value='64'>64-128</option>
+                <option value='128' selected>128-256</option>
+                <option value='256'>256-512</option>
+                <option value='512'>512-1024</option>
+                <option value='1024'>1024-2048</option>
+            </select></td>
+        </tr>
+    </table>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-sm">
+        <tbody id="results">
+
+        </tbody>
+    </table>
+</div>
+<script src="./rymy.js"></script>
+</body>
+</html>
